@@ -30,7 +30,6 @@
 		279E7AB722ED22130060CC5F /* libmpi.40.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmpi.40.dylib; path = ../../../../../usr/local/lib/libmpi.40.dylib; sourceTree = "<group>"; };
 		279E7AB922ED243F0060CC5F /* c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c.cpp; path = src/c.cpp; sourceTree = "<group>"; };
 		279E7ABA22ED243F0060CC5F /* c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c.h; path = src/c.h; sourceTree = "<group>"; };
-		27EBEB8022EDB76400E35002 /* pn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pn.h; path = src/pn.h; sourceTree = "<group>"; };
 		27EBEB8122EE023700E35002 /* bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = src/bridge.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				27EBEB8122EE023700E35002 /* bridge.h */,
-				27EBEB8022EDB76400E35002 /* pn.h */,
 				279E7AB922ED243F0060CC5F /* c.cpp */,
 				279E7ABA22ED243F0060CC5F /* c.h */,
 				279E7AB122ED1DBB0060CC5F /* main.cpp */,
