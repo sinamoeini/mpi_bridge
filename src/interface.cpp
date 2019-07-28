@@ -55,7 +55,7 @@ const I_##X PreDefined::Z= impi_2_l<I_##X>::func(IMPL_MPI<Y>(W));
 typedef MPI_Status* MPI_Status_ptr;
 typedef MPI_Comm* MPI_Comm_ptr;
 #include <cstddef>
-#include "c.h"
+#include "interface.h"
 
 
 

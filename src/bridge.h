@@ -40,7 +40,7 @@
 #define MPI_Scan I_MPI_Scan
 #define MPI_Send I_MPI_Send
 #define MPI_Sendrecv I_MPI_Sendrecv
-#include "c.h"
+#include "interface.h"
 
 
 

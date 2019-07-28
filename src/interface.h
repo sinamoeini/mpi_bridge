@@ -1,5 +1,5 @@
-#ifndef __c_h__
-#define __c_h__
+#ifndef __MAPP_interface_h__
+#define __MAPP_interface_h__
 #include <string>
 #include <cstddef>
 #include <type_traits>
