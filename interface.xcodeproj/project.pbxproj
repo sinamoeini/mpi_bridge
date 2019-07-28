@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		279E7AAA22ED1CCB0060CC5F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279E7AA922ED1CCB0060CC5F /* main.cpp */; };
+		279E7AB222ED1DBB0060CC5F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279E7AB122ED1DBB0060CC5F /* main.cpp */; };
+		279E7AB822ED22130060CC5F /* libmpi.40.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279E7AB722ED22130060CC5F /* libmpi.40.dylib */; };
+		279E7ABB22ED243F0060CC5F /* c.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 279E7AB922ED243F0060CC5F /* c.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +26,12 @@
 
 /* Begin PBXFileReference section */
 		279E7AA622ED1CCB0060CC5F /* interfaec */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = interfaec; sourceTree = BUILT_PRODUCTS_DIR; };
-		279E7AA922ED1CCB0060CC5F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		279E7AB122ED1DBB0060CC5F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
+		279E7AB722ED22130060CC5F /* libmpi.40.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmpi.40.dylib; path = ../../../../../usr/local/lib/libmpi.40.dylib; sourceTree = "<group>"; };
+		279E7AB922ED243F0060CC5F /* c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = c.cpp; path = src/c.cpp; sourceTree = "<group>"; };
+		279E7ABA22ED243F0060CC5F /* c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = c.h; path = src/c.h; sourceTree = "<group>"; };
+		27EBEB8022EDB76400E35002 /* pn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pn.h; path = src/pn.h; sourceTree = "<group>"; };
+		27EBEB8122EE023700E35002 /* bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bridge.h; path = src/bridge.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279E7AB822ED22130060CC5F /* libmpi.40.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +49,9 @@
 		279E7A9D22ED1CCB0060CC5F = {
 			isa = PBXGroup;
 			children = (
-				279E7AA822ED1CCB0060CC5F /* interfaec */,
+				279E7AB022ED1CDF0060CC5F /* src */,
 				279E7AA722ED1CCB0060CC5F /* Products */,
+				279E7AB322ED204B0060CC5F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,12 +63,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		279E7AA822ED1CCB0060CC5F /* interfaec */ = {
+		279E7AB022ED1CDF0060CC5F /* src */ = {
 			isa = PBXGroup;
 			children = (
-				279E7AA922ED1CCB0060CC5F /* main.cpp */,
+				27EBEB8122EE023700E35002 /* bridge.h */,
+				27EBEB8022EDB76400E35002 /* pn.h */,
+				279E7AB922ED243F0060CC5F /* c.cpp */,
+				279E7ABA22ED243F0060CC5F /* c.h */,
+				279E7AB122ED1DBB0060CC5F /* main.cpp */,
 			);
-			path = interfaec;
+			name = src;
+			sourceTree = "<group>";
+		};
+		279E7AB322ED204B0060CC5F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				279E7AB722ED22130060CC5F /* libmpi.40.dylib */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +139,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				279E7AAA22ED1CCB0060CC5F /* main.cpp in Sources */,
+				279E7AB222ED1DBB0060CC5F /* main.cpp in Sources */,
+				279E7ABB22ED243F0060CC5F /* c.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +153,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -176,6 +198,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -190,7 +216,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -229,6 +255,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
