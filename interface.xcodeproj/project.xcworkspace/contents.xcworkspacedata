@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:interfaec.xcodeproj">
+      location = "self:/Users/sina/Documents/Projects/interfaec/interface.xcodeproj">
    </FileRef>
 </Workspace>
