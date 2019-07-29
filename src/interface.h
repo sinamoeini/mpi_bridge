@@ -17,7 +17,11 @@ public:\
     ~X();\
     X& operator=(const X&);\
     X& operator=(X&&);\
+    bool operator!=(const X&);\
 };\
+
+
+
 
 #define GENDCLPREDEF(X,Y) static const X Y;
 
@@ -28,7 +32,7 @@ GENDCL1(MPI_Comm,8,8)
 GENDCL1(MPI_Op,8,8)
 GENDCL1(MPI_Datatype,8,8)
 GENDCL1(MPI_Status_ptr,8,8)
-GENDCL1(MPI_Comm_ptr,8,8)
+GENDCL1(MPI_Status,64,64)
 
 
 
@@ -64,11 +68,33 @@ public:
     const static int I_MPI_UNDEFINED;
 };
 
-
+int I_MPI_Allreduce(void*,void*,int,I_MPI_Datatype,I_MPI_Op,I_MPI_Comm);
+int I_MPI_Barrier(I_MPI_Comm);
+int I_MPI_Bcast(void*,int,I_MPI_Datatype,int,I_MPI_Comm);
+int I_MPI_Cart_create(I_MPI_Comm,int,int [],int [],int,I_MPI_Comm*);
+int I_MPI_Cart_get(I_MPI_Comm,int,int [],int [],int []);
+int I_MPI_Cart_shift(I_MPI_Comm,int,int,int*,int*);
+int I_MPI_Comm_free(I_MPI_Comm*);
+int I_MPI_Comm_rank(I_MPI_Comm,int*);
+int I_MPI_Comm_size(I_MPI_Comm,int*);
+int I_MPI_Comm_split(I_MPI_Comm,int,int,I_MPI_Comm*);
+int I_MPI_Finalize(void);
+int I_MPI_Finalized(int*);
+int I_MPI_Get_processor_name(char*,int*);
+int I_MPI_Init(int*,char***);
+int I_MPI_Initialized(int*);
+int I_MPI_Recv(void*,int,I_MPI_Datatype,int,int,I_MPI_Comm,I_MPI_Status_ptr);
+int I_MPI_Recv(void*,int,I_MPI_Datatype,int,int,I_MPI_Comm,I_MPI_Status*);
+int I_MPI_Reduce(void*,void*,int,I_MPI_Datatype,I_MPI_Op,int,I_MPI_Comm);
+int I_MPI_Scan(void*,void*,int,I_MPI_Datatype,I_MPI_Op,I_MPI_Comm);
+int I_MPI_Send(void*,int,I_MPI_Datatype,int,int,I_MPI_Comm);
+int I_MPI_Sendrecv(void*,int,I_MPI_Datatype,int,int,void*,int,I_MPI_Datatype,int,int,I_MPI_Comm,I_MPI_Status_ptr);
+int I_MPI_Sendrecv(void*,int,I_MPI_Datatype,int,int,void*,int,I_MPI_Datatype,int,int,I_MPI_Comm,I_MPI_Status*);
+/*
 int I_MPI_Allreduce(const void*,void*,int,I_MPI_Datatype,I_MPI_Op,I_MPI_Comm);
 int I_MPI_Barrier(I_MPI_Comm);
 int I_MPI_Bcast(void*,int,I_MPI_Datatype,int,I_MPI_Comm);
-int I_MPI_Cart_create(I_MPI_Comm,int ndims,const int [],const int [],int,I_MPI_Comm_ptr);
+int I_MPI_Cart_create(I_MPI_Comm,int,const int [],const int [],int,I_MPI_Comm_ptr);
 int I_MPI_Cart_get(I_MPI_Comm,int,int [],int [],int []);
 int I_MPI_Cart_shift(I_MPI_Comm,int,int,int*,int*);
 int I_MPI_Comm_free(I_MPI_Comm_ptr);
@@ -85,6 +111,7 @@ int I_MPI_Reduce(const void*,void*,int,I_MPI_Datatype,I_MPI_Op,int,I_MPI_Comm);
 int I_MPI_Scan(const void*,void*,int,I_MPI_Datatype,I_MPI_Op,I_MPI_Comm);
 int I_MPI_Send(const void*,int,I_MPI_Datatype,int,int,I_MPI_Comm);
 int I_MPI_Sendrecv(const void*,int,I_MPI_Datatype,int,int,void*,int,I_MPI_Datatype,int,int,I_MPI_Comm,I_MPI_Status_ptr);
+ */
 /*
 signatures taken from mpich website
 remeber we did this

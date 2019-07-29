@@ -37,6 +37,12 @@ X& X::operator=(X&& other)\
     std::move(*reinterpret_cast<const IMPL_MPI<Y>*>(&other.impl));\
     return *this;\
 }\
+bool X::operator!=(const X& rhs)\
+{\
+    return (reinterpret_cast<IMPL_MPI<Y>*>(&this->impl)->mpi_obj!=reinterpret_cast<const IMPL_MPI<Y>*>(&rhs.impl)->mpi_obj);\
+}\
+
+
 
 
 #define GENPREDEF(X,Y,Z,W) \
@@ -53,7 +59,10 @@ const I_##X PreDefined::Z= impi_2_l<I_##X>::func(IMPL_MPI<Y>(W));
 
 #include <mpi.h>
 typedef MPI_Status* MPI_Status_ptr;
-typedef MPI_Comm* MPI_Comm_ptr;
+bool operator!=(const MPI_Status&,const MPI_Status&)
+{
+    return false;
+}
 #include <cstddef>
 #include "interface.h"
 
@@ -156,6 +165,7 @@ GENBODY1(MPI_Comm)
 GENBODY1(MPI_Op)
 GENBODY1(MPI_Datatype)
 GENBODY1(MPI_Status_ptr)
+GENBODY1(MPI_Status)
 
 
 
@@ -184,7 +194,6 @@ GENPREDEF2(MPI_Datatype,MPI_FLOAT);
 GENPREDEF2(MPI_Datatype,MPI_DOUBLE);
 GENPREDEF2(MPI_Datatype,MPI_LONG_DOUBLE);
 
-//GENPREDEF3(MPI_Status_ptr,MPI_Status*,MPI_STATUS_IGNORE);
 GENPREDEF2(MPI_Status_ptr,MPI_STATUS_IGNORE);
 
 
@@ -195,7 +204,7 @@ const int PreDefined::I_MPI_UNDEFINED=MPI_UNDEFINED;
 /*----------------------------------------------
  
  ----------------------------------------------*/
-int I_MPI_Allreduce(const void* sendbuf,void* recvbuf,int count,I_MPI_Datatype datatype,I_MPI_Op op,I_MPI_Comm comm)
+int I_MPI_Allreduce(void* sendbuf,void* recvbuf,int count,I_MPI_Datatype datatype,I_MPI_Op op,I_MPI_Comm comm)
 {
     return MPI_Allreduce(sendbuf,recvbuf,count,i_2_mpiobj<MPI_Datatype>::func(datatype),i_2_mpiobj<MPI_Op>::func(op),i_2_mpiobj<MPI_Comm>::func(comm));
 }
@@ -216,9 +225,9 @@ int I_MPI_Bcast(void* buffer,int count,I_MPI_Datatype datatype,int root,I_MPI_Co
 /*----------------------------------------------
  
  ----------------------------------------------*/
-int I_MPI_Cart_create(I_MPI_Comm comm_old,int ndims,const int dims[],const int periods[],int reorder,I_MPI_Comm_ptr comm_cart)
+int I_MPI_Cart_create(I_MPI_Comm comm_old,int ndims,int dims[],int periods[],int reorder,I_MPI_Comm* comm_cart)
 {
-    return MPI_Cart_create(i_2_mpiobj<MPI_Comm>::func(comm_old),ndims,dims,periods,reorder,i_2_mpiobj<MPI_Comm_ptr>::func(comm_cart));
+    return MPI_Cart_create(i_2_mpiobj<MPI_Comm>::func(comm_old),ndims,dims,periods,reorder,&i_2_mpiobj<MPI_Comm>::func(*comm_cart));
 }
 /*----------------------------------------------
  
@@ -237,9 +246,9 @@ int I_MPI_Cart_shift(I_MPI_Comm comm,int direction,int disp,int* rank_source,int
 /*----------------------------------------------
  
  ----------------------------------------------*/
-int I_MPI_Comm_free(I_MPI_Comm_ptr comm)
+int I_MPI_Comm_free(I_MPI_Comm* comm)
 {
-    return MPI_Comm_free(i_2_mpiobj<MPI_Comm_ptr>::func(comm));
+    return MPI_Comm_free(&i_2_mpiobj<MPI_Comm>::func(*comm));
 }
 /*----------------------------------------------
  
@@ -258,9 +267,9 @@ int I_MPI_Comm_size(I_MPI_Comm comm,int* size)
 /*----------------------------------------------
  
  ----------------------------------------------*/
-int I_MPI_Comm_split(I_MPI_Comm comm,int color,int key,I_MPI_Comm_ptr newcomm)
+int I_MPI_Comm_split(I_MPI_Comm comm,int color,int key,I_MPI_Comm* newcomm)
 {
-    return MPI_Comm_split(i_2_mpiobj<MPI_Comm>::func(comm),color,key,i_2_mpiobj<MPI_Comm_ptr>::func(newcomm));
+    return MPI_Comm_split(i_2_mpiobj<MPI_Comm>::func(comm),color,key,&i_2_mpiobj<MPI_Comm>::func(*newcomm));
 }
 /*----------------------------------------------
  
@@ -307,31 +316,46 @@ int I_MPI_Recv(void* buf,int count,I_MPI_Datatype datatype,int source,int tag,I_
 /*----------------------------------------------
  
  ----------------------------------------------*/
-int I_MPI_Reduce(const void* sendbuf,void* recvbuf,int count,I_MPI_Datatype datatype,I_MPI_Op op,int root,I_MPI_Comm comm)
+int I_MPI_Recv(void* buf,int count,I_MPI_Datatype datatype,int source,int tag,I_MPI_Comm comm,I_MPI_Status* status)
+{
+    return MPI_Recv(buf,count,i_2_mpiobj<MPI_Datatype>::func(datatype),source,tag,i_2_mpiobj<MPI_Comm>::func(comm),&i_2_mpiobj<MPI_Status>::func(*status));
+}
+/*----------------------------------------------
+ 
+ ----------------------------------------------*/
+int I_MPI_Reduce(void* sendbuf,void* recvbuf,int count,I_MPI_Datatype datatype,I_MPI_Op op,int root,I_MPI_Comm comm)
 {
     return MPI_Reduce(sendbuf,recvbuf,count,i_2_mpiobj<MPI_Datatype>::func(datatype),i_2_mpiobj<MPI_Op>::func(op),root,i_2_mpiobj<MPI_Comm>::func(comm));
 }
 /*----------------------------------------------
  
  ----------------------------------------------*/
-int I_MPI_Scan(const void* sendbuf,void* recvbuf,int count,I_MPI_Datatype datatype,I_MPI_Op op,I_MPI_Comm comm)
+int I_MPI_Scan(void* sendbuf,void* recvbuf,int count,I_MPI_Datatype datatype,I_MPI_Op op,I_MPI_Comm comm)
 {
     return MPI_Scan(sendbuf,recvbuf,count,i_2_mpiobj<MPI_Datatype>::func(datatype),i_2_mpiobj<MPI_Op>::func(op),i_2_mpiobj<MPI_Comm>::func(comm));
 }
 /*----------------------------------------------
  
  ----------------------------------------------*/
-int I_MPI_Send(const void* buf,int count,I_MPI_Datatype datatype,int dest,int tag,I_MPI_Comm comm)
+int I_MPI_Send(void* buf,int count,I_MPI_Datatype datatype,int dest,int tag,I_MPI_Comm comm)
 {
     return MPI_Send(buf,count,i_2_mpiobj<MPI_Datatype>::func(datatype),dest,tag,i_2_mpiobj<MPI_Comm>::func(comm));
 }
 /*----------------------------------------------
  
  ----------------------------------------------*/
-int I_MPI_Sendrecv(const void* sendbuf,int sendcount,I_MPI_Datatype sendtype,int dest,int sendtag,void* recvbuf,int recvcount,I_MPI_Datatype recvtype,int source,int recvtag,I_MPI_Comm comm,I_MPI_Status_ptr status)
+int I_MPI_Sendrecv(void* sendbuf,int sendcount,I_MPI_Datatype sendtype,int dest,int sendtag,void* recvbuf,int recvcount,I_MPI_Datatype recvtype,int source,int recvtag,I_MPI_Comm comm,I_MPI_Status_ptr status)
 {
     return MPI_Sendrecv(sendbuf,sendcount,i_2_mpiobj<MPI_Datatype>::func(sendtype),dest,sendtag,recvbuf,recvcount,i_2_mpiobj<MPI_Datatype>::func(recvtype),source,recvtag,i_2_mpiobj<MPI_Comm>::func(comm),i_2_mpiobj<MPI_Status_ptr>::func(status));
 }
+/*----------------------------------------------
+ 
+ ----------------------------------------------*/
+int I_MPI_Sendrecv(void* sendbuf,int sendcount,I_MPI_Datatype sendtype,int dest,int sendtag,void* recvbuf,int recvcount,I_MPI_Datatype recvtype,int source,int recvtag,I_MPI_Comm comm,I_MPI_Status* status)
+{
+    return MPI_Sendrecv(sendbuf,sendcount,i_2_mpiobj<MPI_Datatype>::func(sendtype),dest,sendtag,recvbuf,recvcount,i_2_mpiobj<MPI_Datatype>::func(recvtype),source,recvtag,i_2_mpiobj<MPI_Comm>::func(comm),&i_2_mpiobj<MPI_Status>::func(*status));
+}
+
 /*
  this is the python code that was used to generate the functions above
  

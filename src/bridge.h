@@ -1,3 +1,9 @@
+
+#define MPI_Comm I_MPI_Comm
+#define MPI_Op I_MPI_Op
+#define MPI_Datatype I_MPI_Datatype
+#define MPI_Status_ptr I_MPI_Status_ptr
+
 #define MPI_COMM_WORLD PreDefined::I_MPI_COMM_WORLD
 #define MPI_COMM_NULL PreDefined::I_MPI_COMM_NULL
 #define MPI_SUM PreDefined::I_MPI_SUM

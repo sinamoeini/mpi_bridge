@@ -1,4 +1,5 @@
 #include "bridge.h"
+#include <cstdio>
 #include <iostream>
 
 int main(int nargs,char* args[])
