@@ -37,10 +37,6 @@ X& X::operator=(X&& other)\
     std::move(*reinterpret_cast<const IMPL_MPI<Y>*>(&other.impl));\
     return *this;\
 }\
-bool X::operator!=(const X& rhs)\
-{\
-    return (reinterpret_cast<IMPL_MPI<Y>*>(&this->impl)->mpi_obj!=reinterpret_cast<const IMPL_MPI<Y>*>(&rhs.impl)->mpi_obj);\
-}\
 
 
 

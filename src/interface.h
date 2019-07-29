@@ -17,7 +17,6 @@ public:\
     ~X();\
     X& operator=(const X&);\
     X& operator=(X&&);\
-    bool operator!=(const X&);\
 };\
 
 
