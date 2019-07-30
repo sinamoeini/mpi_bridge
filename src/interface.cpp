@@ -55,10 +55,6 @@ const I_##X PreDefined::Z= impi_2_l<I_##X>::func(IMPL_MPI<Y>(W));
 
 #include <mpi.h>
 typedef MPI_Status* MPI_Status_ptr;
-bool operator!=(const MPI_Status&,const MPI_Status&)
-{
-    return false;
-}
 #include <cstddef>
 #include "interface.h"
 
